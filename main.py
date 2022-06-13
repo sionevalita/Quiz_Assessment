@@ -35,12 +35,12 @@ class Intro:
 
       reg_password_label = Label(register_frame , text = "Password" , font = "15")
       reg_password_label.place (x=45 , y=55)
-      reg_password_box = Entry(register_frame)
+      reg_password_box = Entry(register_frame , show = '*')
       reg_password_box.place (x=160 , y=55)
 
       confirm_pass_label = Label(register_frame , text = "Confirm Password" , font = "15")
       confirm_pass_label.place (x=10 , y=100)
-      confirm_pass_box = Entry(register_frame)
+      confirm_pass_box = Entry(register_frame , show = '*')
       confirm_pass_box.place (x=160 , y=100)
 
       #register button function that puts input in a file
@@ -74,7 +74,7 @@ class Intro:
     self.user_label.place(x=0, y=125)
 
     #password entry Widget
-    self.pass_box = Entry(self.intro_frame)
+    self.pass_box = Entry(self.intro_frame , show = '*')
     self.pass_box.grid(row=6, pady=20)
     self.pass_label = Label(self.intro_frame, text = "Password" , font = "15", bg = background_color)
     self.pass_label.place(x=0,y=167)
