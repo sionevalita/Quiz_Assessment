@@ -131,21 +131,27 @@ class Book(Frame):
 
         #user's name label and input box
         self.name_label = Label(self , text="Name" , font=(13) , bg=background_color)#label for user instruction
-        self.name_label.place(x=110 , y=210)
+        self.name_label.place(x=110 , y=215)
         self.name_box = Entry(self)#user input
-        self.name_box.place(x=180, y=210)
+        self.name_box.place(x=180, y=215)
 
         #user's input for time
         self.time_label = Label(self, text="Time" , font=(13), bg=background_color)
-        self.time_label.place(x=120 , y=260)
-        self.time_entry = Entry(self)
-        self.time_entry.place(x=180, y=260)
+        self.time_label.place(x=120 , y=265)
+
+        click = IntVar()
+        click.set("1:30")
+        time = OptionMenu(self, click, "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "1:00", "1:30", "2:00", "2:30", "3:00", "3:10")
+        time.place(x=180, y=260)
 
         #user's input for location
         self.loc_label = Label(self, text="Location", font=(13), bg=background_color)
-        self.loc_label.place(x=95 , y=310)
-        self.loc_entry = Entry(self)
-        self.loc_entry.place(x=180 , y=310)
+        self.loc_label.place(x=95 , y=314)
+
+        clicked = StringVar()
+        clicked.set("Resource Room")
+        location = OptionMenu(self, clicked, "Resource Room", "Deans Centre", "IT Department" )
+        location.place(x=180 , y=310)
 
         #info save button
         self.save_button = Button(self , text = "save")
