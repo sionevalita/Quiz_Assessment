@@ -111,9 +111,45 @@ class Book(Frame):
         Frame.__init__(self, master)
         background_color = "#FFFFFF"
         self.configure(bg=background_color)
+
+        #Label heading Widget
+        self.top_label = Label(self, text = "MRGS Chromebook Booking App", font=("Arial" , "15" , "bold"), bg = background_color)
+        self.top_label.place(x=60,y=125)
+
+        #image
+        self.image_label = Image.open("mrgs logo.jpg")
+        self.image_label = self.image_label.resize((100,100), Image.ANTIALIAS)
+        self.image_label = ImageTk.PhotoImage(self.image_label)
+
+        #Image Label
+        self.label_image = Label(self, image = self.image_label, bg = background_color)
+        self.label_image.place(x=200, y=20)    
         
-        self.title_label = Label(self, text="Please fill in the booking details:", bg=background_color, font=("Arial Bold", 15))
-        self.title_label.place(x=50, y=150)        
+        #instruction label
+        self.int_label = Label(self, text="Details:", bg=background_color, font=("Arial Bold", 13))
+        self.int_label.place(x=220, y=170)      
+
+        #user's name label and input box
+        self.name_label = Label(self , text="Name" , font=(13) , bg=background_color)#label for user instruction
+        self.name_label.place(x=110 , y=210)
+        self.name_box = Entry(self)#user input
+        self.name_box.place(x=180, y=210)
+
+        #user's input for time
+        self.time_label = Label(self, text="Time" , font=(13), bg=background_color)
+        self.time_label.place(x=120 , y=260)
+        self.time_entry = Entry(self)
+        self.time_entry.place(x=180, y=260)
+
+        #user's input for location
+        self.loc_label = Label(self, text="Location", font=(13), bg=background_color)
+        self.loc_label.place(x=95 , y=310)
+        self.loc_entry = Entry(self)
+        self.loc_entry.place(x=180 , y=310)
+
+        #info save button
+        self.save_button = Button(self , text = "save")
+        self.save_button.place(x=420 , y=360)
 
 
 
