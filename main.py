@@ -6,11 +6,10 @@ class Intro(Frame):#this class is a Frame
     def __init__(self , master , controller):
         Frame.__init__(self , master)
         background_color = "#FFFFFF"
-        self.configure(bg=background_color) #so you have the white for this frame object (Intro(Frame))
+        self.configure(bg=background_color) 
 
         #Label widget for heading      
         self.top_label = Label(self, text = "MRGS Chromebook Booking App", font=("Arial" , "15" , "bold"), bg = background_color)
-        #self.top_label.grid(row=2, padx=40 , pady=20)
         self.top_label.place(x=50,y=155)
 
         #Image 
@@ -101,8 +100,7 @@ class Intro(Frame):#this class is a Frame
 
         #Log in button
         self.log_button = Button(self, text = "Log In" , command = validation)
-       # self.log_button.place(x=260,y=180)
-        self.log_button.place(x=225 , y=300)
+        self.log_button.place(x=225 , y=300)   
 
       
 #Booking Activity class
@@ -132,14 +130,14 @@ class Book(Frame):
         #user's name label and input box
         self.name_label = Label(self , text="Name" , font=(13) , bg=background_color)#label for user instruction
         self.name_label.place(x=110 , y=215)
-        self.name_box = Entry(self)#user input
-        self.name_box.place(x=180, y=215)
+        name_box = Entry(self)#user input
+        name_box.place(x=180, y=215)
 
         #user's input for time
         self.time_label = Label(self, text="Time" , font=(13), bg=background_color)
         self.time_label.place(x=120 , y=265)
 
-        click = IntVar()
+        click = StringVar()
         click.set("1:30")
         time = OptionMenu(self, click, "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "1:00", "1:30", "2:00", "2:30", "3:00", "3:10")
         time.place(x=180, y=260)
@@ -153,10 +151,79 @@ class Book(Frame):
         location = OptionMenu(self, clicked, "Resource Room", "Deans Centre", "IT Department" )
         location.place(x=180 , y=310)
 
+        #preview Window
+        def preview():
+      
+            preview_frame = Tk()
+            preview_frame.title("Preview")
+
+            #Label for user's decision
+            pre_label = Label(preview_frame, text="Selected Details", font="13")
+            pre_label.place(x=120,y=30)
+
+            #Name preview
+            pre_name_label = Label(preview_frame, text="Name:", font="11")
+            pre_name_label.place(x=70,y=110)
+            sel_name_label = Label(preview_frame, text=name_box.get(), font="11" )
+            sel_name_label.place(x=170,y=110)
+          
+            #Time preview
+            pre_time_label = Label(preview_frame, text="Time:", font="11")
+            pre_time_label.place(x=70,y=160)
+            sel_time_label = Label(preview_frame, text=click.get(), font="11")
+            sel_time_label.place(x=170,y=160)
+    
+            #Location preview
+            pre_location_label = Label(preview_frame, text="Location:", font="11")
+            pre_location_label.place(x=70,y=210)
+            sel_location_label = Label(preview_frame, text=clicked.get(), font="11")#selected option from dropdown menu
+            sel_location_label.place(x=170,y=210)
+   
+            #Close button
+            close_button = Button(preview_frame, text="Close", font="11", borderwidth=3, command=preview_frame.destroy)
+            close_button.place(x=10,y=300)
+
+            #function for save button
+            def save_details():
+              with open("details.txt","a") as f:
+                f.write(name_box.get()+","+click.get()+","+clicked.get()+",\n")
+
+                preview_frame.destroy()#destroys preview frame
+                controller.show_frame(End)#shows end frame
+            
+            #Save button 
+            save_button = Button(preview_frame, text="Save", font="11", borderwidth=3, command = save_details)
+            save_button.place(x=270,y=300)
+          
+            #frame resize and mainloop 
+            preview_frame.geometry("350x350")
+            preview_frame.mainloop()
+                  
         #info save button
-        self.save_button = Button(self , text = "save")
+        self.save_button = Button(self , text = "save", command=preview)
         self.save_button.place(x=420 , y=360)
 
+      
+#Summary/End Page
+class End(Frame):
+    def __init__(self, master, controller):
+        Frame.__init__(self, master)
+        background_color = "#FFFFFF"
+        self.configure(bg=background_color)
+      
+        #Label to let user know the order is successful
+        sum_label = Label(self, text="Your chromebook has\n been saved for you to pick up" , bg=background_color, font=15)
+        sum_label.place(x=100,y=100)
+
+        #function for close Button
+        def close():
+          exit()
+      
+        #close Button
+        fin_button = Button(self, text="Close", font=15, command = close)
+        fin_button.place(x=400,y=370)
+
+        
 
 
 
@@ -173,7 +240,7 @@ class BookingApp(Tk):
         self.window.grid_columnconfigure(0, minsize = 800)
 
         self.frames = {}
-        for F in (Intro,Book):
+        for F in (Intro,Book,End):
             frame = F(self.window, self)
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky="nsew")#have to use sticky
