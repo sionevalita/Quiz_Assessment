@@ -8,6 +8,10 @@ class Intro(Frame):#this class is a Frame
         background_color = "#FFFFFF"
         self.configure(bg=background_color) 
 
+        #creating the login/register text file in advance
+        file_1 = open("id_pass.txt","w")
+        file_1.close() 
+
         #Label widget for heading      
         self.top_label = Label(self, text = "MRGS Chromebook Booking App", font=("Arial" , "15" , "bold"), bg = background_color)
         self.top_label.place(x=50,y=155)
@@ -20,8 +24,6 @@ class Intro(Frame):#this class is a Frame
         #Image Label
         self.label_image = Label(self, image = self.image_label, bg = background_color)
         self.label_image.place(x=200, y=40)
-        #self.label_image.grid(row=1,pady=20)
-
 
         #register button function to open register window (no function yet)
         def reg():
@@ -54,7 +56,7 @@ class Intro(Frame):#this class is a Frame
                         messagebox.showinfo('Registration' , "Your passwords do not match!")
                 else:
                     messagebox.showinfo('Registration' , "The fields are empty, Please fill them out!")
-
+                                                
             register_button = Button(register_frame , text = "Register" , font = "15" , command = justify)
             register_button.place (x=150 , y=150)
 
@@ -202,6 +204,10 @@ class Book(Frame):
         #info save button
         self.save_button = Button(self , text = "save", command=preview)
         self.save_button.place(x=420 , y=360)
+
+        #back button
+        self.back_button = Button(self, text = "back", command = lambda: controller.show_frame(Intro))
+        self.back_button.place(x=30,y=360)
 
       
 #Summary/End Page
