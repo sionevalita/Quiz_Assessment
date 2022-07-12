@@ -43,7 +43,26 @@ class Intro(Frame):#this class is a Frame
             confirm_pass_label.place (x=10 , y=100)
             confirm_pass_box = Entry(register_frame , show = '*')
             confirm_pass_box.place (x=160 , y=100)
+          
+        #checks register for duplicate id
+            def check():
+              try:
+                with open("id_pass.txt","r") as d:
+                    data = d.readlines()
+                    i = 0
+                    for d in data:
+                      student_id, student_pass = d.split(",")
+                      if student_id.strip() == reg_studentid_box.get():
+                        justify.exit()#stops justify function from running
+                        messagebox.showinfo("Error","This ID has already been used")                  
+                        i=1
+                        break
+              except:
+                messagebox.showinfo("Error", "This ID has already been used")
+              else:
+                justify()#runs justify function if user id's don't match
 
+          
             #register button function that puts input in a file
             def justify():
                 if reg_studentid_box.get()!="" or reg_password_box.get()!="" or confirm_pass_box.get()!="":
@@ -55,11 +74,12 @@ class Intro(Frame):#this class is a Frame
                     else:
                         messagebox.showinfo('Registration' , "Your passwords do not match!")
                 else:
-                    messagebox.showinfo('Registration' , "The fields are empty, Please fill them out!")
+                    messagebox.showinfo('Registration' , "The fields are empty, Please fill them out!")  
+                          
                                                 
-            register_button = Button(register_frame , text = "Register" , font = "15" , command = justify)
+            register_button = Button(register_frame , text = "Register" , font = "15" , command = check)
             register_button.place (x=150 , y=150)
-
+    
             register_frame.geometry("400x200")  
             register_frame.mainloop()
 
@@ -73,7 +93,6 @@ class Intro(Frame):#this class is a Frame
         self.user_box.place(x=160, y=210)
         self.user_label = Label(self , text = "Student ID" , font = "15", bg = background_color)
         self.user_label.place(x=60, y=210)
-        #self.user_label.grid(row=4 , padx=10)
  
 
         #password entry Widget
