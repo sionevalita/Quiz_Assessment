@@ -43,8 +43,29 @@ class Intro(Frame):#this class is a Frame
             confirm_pass_label.place (x=10 , y=100)
             confirm_pass_box = Entry(register_frame , show = '*')
             confirm_pass_box.place (x=160 , y=100)
+
+            #stops check function from running
+            def check_stop():
+              check.exit()
+
+            #checks if user put any input
+            def char():
+              name = reg_studentid_box.get()
+              if name.strip() !="" and len(name) <=6: #if student ID equal or less than 7 characters
+                check()
+
+              elif len(name) > 6: #else if length of name is more than 6 characters
+                check_stop
+                messagebox.showinfo("Error","Your ID has to be less that 6 characters")
+                
+
+              elif len(name) == 0: #if user put no input in at all
+                check_stop
+                messagebox.showinfo("Error","Please provide your student ID")
+                
+              
           
-        #checks register for duplicate id
+            #checks register for duplicate id
             def check():
               try:
                 with open("id_pass.txt","r") as d:
@@ -62,7 +83,7 @@ class Intro(Frame):#this class is a Frame
               else:
                 justify()#runs justify function if user id's don't match
 
-          
+        
             #register button function that puts input in a file
             def justify():
                 if reg_studentid_box.get()!="" or reg_password_box.get()!="" or confirm_pass_box.get()!="":
@@ -77,7 +98,7 @@ class Intro(Frame):#this class is a Frame
                     messagebox.showinfo('Registration' , "The fields are empty, Please fill them out!")  
                           
                                                 
-            register_button = Button(register_frame , text = "Register" , font = "15" , command = check)
+            register_button = Button(register_frame , text = "Register" , font = "15" , command = char)
             register_button.place (x=150 , y=150)
     
             register_frame.geometry("400x200")  
@@ -101,6 +122,9 @@ class Intro(Frame):#this class is a Frame
         self.pass_label = Label(self, text = "Password" , font = "15", bg = background_color)
         self.pass_label.place(x=70,y=254)
 
+
+
+      
         #Log in button function
         def validation():
             try:
@@ -121,7 +145,10 @@ class Intro(Frame):#this class is a Frame
 
         #Log in button
         self.log_button = Button(self, text = "Log In" , command = validation)
-        self.log_button.place(x=225 , y=300)   
+        self.log_button.place(x=225 , y=300)  
+
+
+
 
       
 #Booking Activity class
@@ -237,12 +264,8 @@ class End(Frame):
         self.configure(bg=background_color)
       
         #Label to let user know the order is successful
-        sum_label = Label(self, text="Your chromebook has\n been saved for you to pick up" , bg=background_color, font=15)
-        sum_label.place(x=100,y=100)
-
-        #function for close Button
-        def close():
-          exit()
+        sum_label = Label(self, text="Thank you, your order has been saved", bg=background_color, font=15)
+        sum_label.place(x=125,y=100)
       
         #close Button
         fin_button = Button(self, text="Close", font=15, command = close)
