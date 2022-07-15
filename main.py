@@ -8,10 +8,6 @@ class Intro(Frame):#this class is a Frame
         background_color = "#FFFFFF"
         self.configure(bg=background_color) 
 
-        #creating the login/register text file in advance
-        file_1 = open("id_pass.txt","w")
-        file_1.close() 
-
         #Label widget for heading      
         self.top_label = Label(self, text = "MRGS Chromebook Booking App", font=("Arial" , "15" , "bold"), bg = background_color)
         self.top_label.place(x=50,y=155)
@@ -58,7 +54,6 @@ class Intro(Frame):#this class is a Frame
                 check_stop
                 messagebox.showinfo("Error","Your ID has to be less that 6 characters")
                 
-
               elif len(name) == 0: #if user put no input in at all
                 check_stop
                 messagebox.showinfo("Error","Please provide your student ID")
@@ -108,6 +103,7 @@ class Intro(Frame):#this class is a Frame
         #Register Button
         self.register_button = Button(self, text = "Register" , command = reg)
         self.register_button.place(x=400, y=15)
+      
 
         #username entry Widget
         self.user_box = Entry(self)
@@ -234,7 +230,7 @@ class Book(Frame):
             #function for save button
             def save_details():
               with open("details.txt","a") as f:
-                f.write(name_box.get()+","+click.get()+","+clicked.get()+",\n")
+                f.write(name_box.get()+","+click.get()+","+clicked.get()+"\n")
 
                 preview_frame.destroy()#destroys preview frame
                 controller.show_frame(End)#shows end frame
@@ -262,10 +258,53 @@ class End(Frame):
         Frame.__init__(self, master)
         background_color = "#FFFFFF"
         self.configure(bg=background_color)
-      
+
         #Label to let user know the order is successful
-        sum_label = Label(self, text="Thank you, your order has been saved", bg=background_color, font=15)
-        sum_label.place(x=125,y=100)
+        sum_label = Label(self, text="Thank you for using our Booking App.\n Your order has been saved ", bg=background_color, font="15")
+        sum_label.place(x=110,y=100)
+
+        #Order review function
+        def review():
+            review_frame = Tk()
+            review_frame.title("Your Order")
+
+            with open("details.txt","r") as file:
+             data = file.readlines()
+             for file in data:
+               self.name, self.time, self.location = file.split(",")
+
+            #user name review
+            rev_name_label = Label(review_frame, text="Name:", font="14")
+            rev_name_label.place(x=70,y=50)
+            sel_name_label = Label(review_frame, text=self.name , font="11")#user's name
+            sel_name_label.place(x=160,y=50)
+
+            #user time review
+            rev_time_label = Label(review_frame, text="Time:", font="14")
+            rev_time_label.place(x=70,y=120)
+            sel_time_label = Label(review_frame, text=self.time, font="11")#selected time
+            sel_time_label.place(x=160,y=120)
+          
+            #user location review
+            rev_location_label = Label(review_frame, text="Location:", font="14")
+            rev_location_label.place(x=70,y=190)
+            sel_location_label = Label(review_frame, text = self.location, font="11")#selected location
+            sel_location_label.place(x=160,y=190)
+
+            close_button = Button(review_frame, text="Close", font="11", borderwidth=3, command = review_frame.destroy)
+            close_button.place(x=250,y=250)
+          
+
+            review_frame.geometry("350x300")
+            review_frame.mainloop()
+
+        #Order review button
+        rev_button = Button(self, text="View Order", font=15, command = review)
+        rev_button.place(x=50,y=370)
+
+        #function for close Button
+        def close():
+          exit()
       
         #close Button
         fin_button = Button(self, text="Close", font=15, command = close)
