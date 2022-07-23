@@ -8,6 +8,10 @@ class Intro(Frame):#this class is a Frame
         background_color = "#FFFFFF"
         self.configure(bg=background_color) 
 
+        #creating the login/register text file in advance
+        file_1 = open("id_pass.txt","w")
+        file_1.close() 
+
         #Label widget for heading      
         self.top_label = Label(self, text = "MRGS Chromebook Booking App", font=("Arial" , "15" , "bold"), bg = background_color)
         self.top_label.place(x=50,y=155)
@@ -47,6 +51,9 @@ class Intro(Frame):#this class is a Frame
             #checks if user put any input
             def char():
               name = reg_studentid_box.get()
+              password = reg_password_box.get()
+              
+              #name boundary check
               if name.strip() !="" and len(name) <=6: #if student ID equal or less than 7 characters
                 check()
 
@@ -57,8 +64,21 @@ class Intro(Frame):#this class is a Frame
               elif len(name) == 0: #if user put no input in at all
                 check_stop
                 messagebox.showinfo("Error","Please provide your student ID")
+
+
                 
-              
+              #password boundary check
+              if password.strip() !="" and len(password) >=6:#password equal to and greater than 6 chracter
+                check()
+
+              elif len(password) == 0:
+                check_stop
+                messagebox.showinfo("Error","Please create a password")  
+
+              elif len(password)<6:
+                check_stop
+                messagebox.showinfo("Error","Paasword needs to be more than 6 characters")
+                
           
             #checks register for duplicate id
             def check():
