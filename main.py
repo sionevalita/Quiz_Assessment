@@ -8,10 +8,6 @@ class Intro(Frame):#this class is a Frame
         background_color = "#FFFFFF"
         self.configure(bg=background_color) 
 
-        #creating the login/register text file in advance
-        file_1 = open("id_pass.txt","w")
-        file_1.close() 
-
         #Label widget for heading      
         self.top_label = Label(self, text = "MRGS Chromebook Booking App", font=("Arial" , "15" , "bold"), bg = background_color)
         self.top_label.place(x=50,y=155)
@@ -48,14 +44,11 @@ class Intro(Frame):#this class is a Frame
             def check_stop():
               check.exit()
 
-            #checks if user put any input
+            #checks input ID
             def char():
               name = reg_studentid_box.get()
-              password = reg_password_box.get()
-              
-              #name boundary check
               if name.strip() !="" and len(name) <=6: #if student ID equal or less than 7 characters
-                check()
+                pass_char()#runs pass_char function
 
               elif len(name) > 6: #else if length of name is more than 6 characters
                 check_stop
@@ -65,20 +58,38 @@ class Intro(Frame):#this class is a Frame
                 check_stop
                 messagebox.showinfo("Error","Please provide your student ID")
 
+                
+            #checks input password
+            def pass_char():
+              pword = reg_password_box.get()
+              if pword.strip() !="" and len(pword) >=6:
+                con_pass()
+
+              elif len(pword) >1 <6:#characters < 6 characters but must not reach 0
+                check_stop
+                messagebox.showinfo("Error","Password must be less than 6 characters")
+
+              elif len(pword) == 0:#no input
+                check_stop
+                messagebox.showinfo("Error","Please create a password")
 
                 
-              #password boundary check
-              if password.strip() !="" and len(password) >=6:#password equal to and greater than 6 chracter
+              #checks input confirm password
+            def con_pass():
+              con_pword = confirm_pass_box.get()
+              if con_pword.strip() !="" and len(con_pword) >=6:
                 check()
 
-              elif len(password) == 0:
+              elif len(con_pword) >1 <6:#characters < 6 characters but must not reach 0
                 check_stop
-                messagebox.showinfo("Error","Please create a password")  
+                messagebox.showinfo("Error","Password must be less than 6 characters")
 
-              elif len(password)<6:
+              elif len(con_pword) == 0:#no input
                 check_stop
-                messagebox.showinfo("Error","Paasword needs to be more than 6 characters")
-                
+                messagebox.showinfo("Error","Please create a password")
+
+            
+              
           
             #checks register for duplicate id
             def check():
@@ -113,7 +124,7 @@ class Intro(Frame):#this class is a Frame
                     messagebox.showinfo('Registration' , "The fields are empty, Please fill them out!")  
                           
                                                 
-            register_button = Button(register_frame , text = "Register" , font = "15" , command = char)
+            register_button = Button(register_frame , text = "Register" , font = "15" , command = lambda: [char(), pass_char(), con_pass()])
             register_button.place (x=150 , y=150)
     
             register_frame.geometry("400x200")  

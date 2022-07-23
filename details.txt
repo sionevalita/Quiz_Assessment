@@ -1,0 +1,16 @@
+bob,1:30,Resource Room
+bob,1:30,Resource Room
+bbb,1:30,Resource Room
+1,1:30,Resource Room
+test,2:30,Deans Centre
+bobby,3:10,IT Department
+bobby,1:30,Resource Room
+1,1:30,Resource Room
+1,1:30,Resource Room
+1,1:30,Resource Room
+Bob,2:00,Deans Centre
+Bobby,2:30,Deans Centre
+1,1:30,Resource Room
+1,1:30,Resource Room
+Bobby,1:30,Deans Centre
+test user,3:00,Deans Centre
