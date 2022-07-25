@@ -28,61 +28,67 @@ class Intro(Frame):#this class is a Frame
             reg_studentid_label = Label(register_frame , text = "Student ID" , font = "15")
             reg_studentid_label.place (x=45 , y=10)
             reg_studentid_box = Entry(register_frame)
-            reg_studentid_box.place (x=160 , y=10)
+            reg_studentid_box.place (x=165 , y=10)
 
             reg_password_label = Label(register_frame , text = "Password" , font = "15")
             reg_password_label.place (x=45 , y=55)
             reg_password_box = Entry(register_frame , show = '*')
-            reg_password_box.place (x=160 , y=55)
+            reg_password_box.place (x=165 , y=55)
 
             confirm_pass_label = Label(register_frame , text = "Confirm Password" , font = "15")
             confirm_pass_label.place (x=10 , y=100)
             confirm_pass_box = Entry(register_frame , show = '*')
-            confirm_pass_box.place (x=160 , y=100)
+            confirm_pass_box.place (x=165 , y=100)
 
             #stops check function from running
             def check_stop():
               check.exit()
 
+              
             #checks input ID
             def char():
               name = reg_studentid_box.get()
-              if name.strip() !="" and len(name) <=6: #if student ID equal or less than 7 characters
+              if name.strip() !="" and len(name) == 5: #if student ID equal to 5 characters
                 pass_char()#runs pass_char function
 
-              elif len(name) > 6: #else if length of name is more than 6 characters
+              elif len(name) > 5: #else if length of name is more than 5 characters
                 check_stop
-                messagebox.showinfo("Error","Your ID has to be less that 6 characters")
+                messagebox.showinfo("Error","Your ID has to be 5 characters")
+
+              elif len(name) < 5: #else if length of name is more than 5 characters
+                check_stop
+                messagebox.showinfo("Error","Your ID has to be 5 characters")
                 
               elif len(name) == 0: #if user put no input in at all
                 check_stop
                 messagebox.showinfo("Error","Please provide your student ID")
 
+
                 
             #checks input password
             def pass_char():
               pword = reg_password_box.get()
-              if pword.strip() !="" and len(pword) >=6:
+              if pword.strip() !="" and len(pword) <=7:
                 con_pass()
 
-              elif len(pword) >1 <6:#characters < 6 characters but must not reach 0
+              elif len(pword) >7:#characters > 7 characters 
                 check_stop
-                messagebox.showinfo("Error","Password must be less than 6 characters")
+                messagebox.showinfo("Error","Password must be less than 7 characters")# error message if elif condition is met
 
               elif len(pword) == 0:#no input
                 check_stop
-                messagebox.showinfo("Error","Please create a password")
+                messagebox.showinfo("Error","Please create a password") #error message
 
                 
               #checks input confirm password
             def con_pass():
               con_pword = confirm_pass_box.get()
-              if con_pword.strip() !="" and len(con_pword) >=6:
+              if con_pword.strip() !="" and len(con_pword) <=7:
                 check()
 
-              elif len(con_pword) >1 <6:#characters < 6 characters but must not reach 0
+              elif len(con_pword) >7 :#characters > 6 characters 
                 check_stop
-                messagebox.showinfo("Error","Password must be less than 6 characters")
+                messagebox.showinfo("Error","Password must be less than 7 characters")
 
               elif len(con_pword) == 0:#no input
                 check_stop
@@ -124,7 +130,7 @@ class Intro(Frame):#this class is a Frame
                     messagebox.showinfo('Registration' , "The fields are empty, Please fill them out!")  
                           
                                                 
-            register_button = Button(register_frame , text = "Register" , font = "15" , command = lambda: [char(), pass_char(), con_pass()])
+            register_button = Button(register_frame , text = "Register" , font = "15" , command = char)
             register_button.place (x=150 , y=150)
     
             register_frame.geometry("400x200")  
